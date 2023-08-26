@@ -16,7 +16,7 @@
 
 .foto-container{
     position: relative;
-    width: 200px;
+    width: 30%;
 }
 
 .foto-wrapper{
@@ -77,4 +77,10 @@
 
 #texto{
     color: #264575;
+}
+
+@media (max-width: 768px) {
+    .foto-container{
+        width: 50%;
+    }
 }
