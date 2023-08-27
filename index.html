@@ -16,6 +16,11 @@
       <img class="foto" src="fotico.jpg">
     </div>
   </div>
+  <div id="progreso-container">
+    <img id="gio" class="foto-progreso" src="gio.png">
+    <img id="david" class="foto-progreso" src="david.png">
+    <progress id="progreso" max="100" value="0"></progress>
+  </div>
   <div id="count">
     <div id="meses" class="count-container">
       <span id="num-m" class="num"></span><span id="let-m" class="letra"></span>
@@ -38,10 +43,12 @@ var countDownDate = new Date("Apr 18, 2024 14:00:00").getTime();
 var x = setInterval(function() {
 
   // Get today's date and time
-  var now = new Date().getTime();
+  var now = new Date("Dec 30, 2023 14:00:00").getTime();
+  var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
 
   // Find the distance between now and the count down date
   var distance = countDownDate - now;
+  var progress = (1-(distance/(countDownDate - startDate)))*100;
 
   // Time calculations for days, hours, minutes and seconds
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -58,6 +65,8 @@ var x = setInterval(function() {
   document.getElementById("let-d").innerHTML = (days!=1?" días":" día");
   document.getElementById("num-h").innerHTML = hours;
   document.getElementById("let-h").innerHTML = (hours!=1?" horas":" hora");
+  document.getElementById("progreso").value = progress;
+  document.getElementById("gio").style.left = (progress-10) + "%";
 
   if(months<1) {
     document.getElementById("meses").style.display='none';
