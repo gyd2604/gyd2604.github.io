@@ -11,16 +11,12 @@
 <body>
 
 <div id="content">
-  <div class="foto-container">
-    <div class="foto-wrapper">
-      <img class="foto" src="fotico.jpg">
-    </div>
-  </div>
   <div id="progreso-container">
-    <img id="gio" class="foto-progreso" src="gio.png">
     <img id="david" class="foto-progreso" src="david.png">
+    <img id="gio" class="foto-progreso" src="gio.png">
     <progress id="progreso" max="100" value="0"></progress>
   </div>
+  <p id="falta">Solo faltan</p>
   <div id="count">
     <div id="meses" class="count-container">
       <span id="num-m" class="num"></span><span id="let-m" class="letra"></span>
@@ -31,8 +27,19 @@
     <div id="horas" class="count-container">
       <span id="num-h" class="num"></span><span id="let-h" class="letra"></span>
     </div>
+    <div id="minutos" class="count-container">
+      <span id="num-min" class="num"></span><span id="let-min" class="letra"></span>
+    </div>
+    <div id="segundos" class="count-container">
+      <span id="num-s" class="num"></span><span id="let-s" class="letra"></span>
+    </div>
   </div>
   <p id="texto"></p>
+  <div class="foto-container">
+    <div class="foto-wrapper">
+      <img class="foto" src="fotico.jpg">
+    </div>
+  </div>
 </div>
 
 <script>
@@ -65,8 +72,12 @@ var x = setInterval(function() {
   document.getElementById("let-d").innerHTML = (days!=1?" días":" día");
   document.getElementById("num-h").innerHTML = hours;
   document.getElementById("let-h").innerHTML = (hours!=1?" horas":" hora");
+  document.getElementById("num-min").innerHTML = minutes;
+  document.getElementById("let-min").innerHTML = (minutes!=1?" mins.":" min.");
+  document.getElementById("num-s").innerHTML = seconds;
+  document.getElementById("let-s").innerHTML = (seconds!=1?" segs.":" seg.");
   document.getElementById("progreso").value = progress;
-  document.getElementById("gio").style.left = (progress-10) + "%";
+  document.getElementById("gio").style.left = (progress-20) + "%";
 
   if(months<1) {
     document.getElementById("meses").style.display='none';
@@ -74,14 +85,21 @@ var x = setInterval(function() {
       document.getElementById("dias").style.display='none';
       if(hours<1) {
         document.getElementById("horas").style.display='none';
+        if(minutes<1) {
+          document.getElementById("minutos").style.display='none';
+          if(seconds<1) {
+            document.getElementById("segundos").style.display='none';
+          }
+        }
       }
     }
   }
 
   // If the count down is finished, write some text
-  if (distance < 0) {
+  if (distance <= 0) {
     clearInterval(x);
     document.getElementById("texto").innerHTML = "Estamos juntos ♥";
+    document.getElementById("falta").style.display = 'none';
   }else{
     document.getElementById("texto").innerHTML = "para volver a estar así";
   }
