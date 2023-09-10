@@ -34,6 +34,7 @@
       <span id="num-s" class="num"></span><span id="let-s" class="letra"></span>
     </div>
   </div>
+  <button id="cambiar" onclick="toggle()">Cambiar a meses</button>
   <p id="texto"></p>
   <div class="foto-container">
     <div class="foto-wrapper">
@@ -45,9 +46,23 @@
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("Apr 18, 2024 14:00:00").getTime();
-
+var meses = false;
 // Update the count down every 1 second
 var x = setInterval(function() {
+calcular();
+}, 1000);
+
+function toggle() {
+  meses = !meses;
+  calcular();
+  if(meses){
+    document.getElementById("cambiar").innerHTML = "Cambiar a días";
+  }else{
+    document.getElementById("cambiar").innerHTML = "Cambiar a meses";
+  }
+}
+
+function calcular(){
 
   // Get today's date and time
   var now = new Date().getTime();
@@ -59,15 +74,24 @@ var x = setInterval(function() {
 
   // Time calculations for days, hours, minutes and seconds
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  var months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
-  var days = Math.floor((distance % (1000*60*60*24*30) )/ (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var days = 0;
+  if(meses){
+    days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+  }else{
+    days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  }
+  var months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
 
   // Display the result in the element with id="demo"
-  document.getElementById("num-m").innerHTML = months;
-  document.getElementById("let-m").innerHTML = (months!=1?" meses":" mes");
+  if(meses){
+    document.getElementById("meses").style.display='flex';
+    document.getElementById("num-m").innerHTML = months;
+    document.getElementById("let-m").innerHTML = (months!=1?" meses":" mes");
+  }else{
+    document.getElementById("meses").style.display='none';
+  }
   document.getElementById("num-d").innerHTML = days;
   document.getElementById("let-d").innerHTML = (days!=1?" días":" día");
   document.getElementById("num-h").innerHTML = hours;
@@ -103,7 +127,8 @@ var x = setInterval(function() {
   }else{
     document.getElementById("texto").innerHTML = "para volver a estar así";
   }
-}, 1000);
+}
+
 </script>
 
 </body>

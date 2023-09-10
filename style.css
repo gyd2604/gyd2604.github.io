@@ -106,9 +106,19 @@ body{
     text-align: center;
 }
 
+#cambiar{
+    border-radius: 50px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    background-color: #f4f8f9;
+    border: 1px solid #77c7e0;
+    margin-top: 10px;
+}
+
 #texto{
     color: #264575;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 @media (max-width: 768px) {
