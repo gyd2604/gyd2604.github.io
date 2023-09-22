@@ -21,6 +21,9 @@
     <div id="meses" class="count-container">
       <span id="num-m" class="num"></span><span id="let-m" class="letra"></span>
     </div>
+    <div id="semanas" class="count-container">
+      <span id="num-sem" class="num"></span><span id="let-sem" class="letra"></span>
+    </div>
     <div id="dias" class="count-container">
       <span id="num-d" class="num"></span><span id="let-d" class="letra"></span>
     </div>
@@ -34,7 +37,11 @@
       <span id="num-s" class="num"></span><span id="let-s" class="letra"></span>
     </div>
   </div>
-  <button id="cambiar" onclick="toggle()">Cambiar a meses</button>
+  <div id="btn-group">
+    <button id="cambiar-meses" class="btn-toggle active" onclick="toggle(0)">Meses</button>
+    <button id="cambiar-semanas" class="btn-toggle inactive" onclick="toggle(1)">Semanas</button>
+    <button id="cambiar-dias" class="btn-toggle inactive" onclick="toggle(2)">Días</button>
+  </div>
   <p id="texto"></p>
   <div class="foto-container">
     <div class="foto-wrapper">
@@ -46,20 +53,30 @@
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("Apr 18, 2024 14:00:00").getTime();
-var meses = false;
+var mode = 0; //0=mes, 1=semana, 2=dias
+var toggled = false;
+
 // Update the count down every 1 second
 var x = setInterval(function() {
 calcular();
 }, 1000);
 
-function toggle() {
-  meses = !meses;
-  calcular();
-  if(meses){
-    document.getElementById("cambiar").innerHTML = "Cambiar a días";
-  }else{
-    document.getElementById("cambiar").innerHTML = "Cambiar a meses";
+function toggle (opc) {
+  toggled = true;
+  mode = opc;
+  var group = document.getElementById("btn-group");
+  for (var i = 0; i < group.children.length; i++) {
+    var child = group.children[i];
+    if(i==opc){
+      child.classList.add("active");
+      child.classList.remove("inactive");
+    }else{
+      child.classList.remove("active");
+      child.classList.add("inactive");
+    }
   }
+  calcular();
+
 }
 
 function calcular(){
@@ -77,42 +94,79 @@ function calcular(){
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var days = 0;
-  if(meses){
-    days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-  }else{
-    days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  }
-  var months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
+  var weeks = 0;
+  var months = 0;
+  switch(mode){
+    case 0: //meses
+      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+      weeks = Math.floor((distance % (1000 * 60 * 60 * 24 * 7 * 4)) / (1000 * 60 * 60 * 24 * 7));
+      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
 
-  // Display the result in the element with id="demo"
-  if(meses){
-    document.getElementById("meses").style.display='flex';
-    document.getElementById("num-m").innerHTML = months;
-    document.getElementById("let-m").innerHTML = (months!=1?" meses":" mes");
-  }else{
-    document.getElementById("meses").style.display='none';
+      document.getElementById("semanas").style.display='flex';
+      document.getElementById("meses").style.display='flex';
+      break;
+    case 1:
+      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
+      weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+
+      document.getElementById("semanas").style.display='flex';
+      document.getElementById("meses").style.display='none';
+      break;
+    case 2: //días
+      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
+      weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+      days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+      document.getElementById("semanas").style.display='none';
+      document.getElementById("meses").style.display='none';
+      break;
   }
+      // Display the result in the element with id="demo"
+  document.getElementById("num-m").innerHTML = months;
+  document.getElementById("let-m").innerHTML = (months!=1?" meses":" mes");
+  document.getElementById("num-sem").innerHTML = weeks;
+  document.getElementById("let-sem").innerHTML = (weeks!=1?"semanas":"semana");
   document.getElementById("num-d").innerHTML = days;
-  document.getElementById("let-d").innerHTML = (days!=1?" días":" día");
+  document.getElementById("let-d").innerHTML = (days!=1?"días":"día");
   document.getElementById("num-h").innerHTML = hours;
-  document.getElementById("let-h").innerHTML = (hours!=1?" horas":" hora");
+  document.getElementById("let-h").innerHTML = (hours!=1?"horas":"hora");
   document.getElementById("num-min").innerHTML = minutes;
-  document.getElementById("let-min").innerHTML = (minutes!=1?" mins.":" min.");
+  document.getElementById("let-min").innerHTML = (minutes!=1?"mins.":"min.");
   document.getElementById("num-s").innerHTML = seconds;
-  document.getElementById("let-s").innerHTML = (seconds!=1?" segs.":" seg.");
+  document.getElementById("let-s").innerHTML = (seconds!=1?"segs.":"seg.");
   document.getElementById("progreso").value = progress;
   document.getElementById("gio").style.left = (progress-20) + "%";
 
   if(months<1) {
     document.getElementById("meses").style.display='none';
-    if(days<1) {
-      document.getElementById("dias").style.display='none';
-      if(hours<1) {
-        document.getElementById("horas").style.display='none';
-        if(minutes<1) {
-          document.getElementById("minutos").style.display='none';
-          if(seconds<1) {
-            document.getElementById("segundos").style.display='none';
+    document.getElementById("cambiar-meses").style.display='none';
+    if(!toggled){
+      mode = 1;
+      var group = document.getElementById("btn-group");
+      for (var i = 0; i < group.children.length; i++) {
+        var child = group.children[i];
+        if(i==mode){
+          child.classList.add("active");
+          child.classList.remove("inactive");
+        }else{
+          child.classList.remove("active");
+          child.classList.add("inactive");
+        }
+      }
+    }
+    if(weeks<1){
+      document.getElementById("semanas").style.display='none';
+      document.getElementById("btn-group").style.display='none';
+      if(days<1) {
+        document.getElementById("dias").style.display='none';
+        if(hours<1) {
+          document.getElementById("horas").style.display='none';
+          if(minutes<1) {
+            document.getElementById("minutos").style.display='none';
+            if(seconds<1) {
+              document.getElementById("segundos").style.display='none';
+            }
           }
         }
       }

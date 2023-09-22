@@ -106,14 +106,33 @@ body{
     text-align: center;
 }
 
-#cambiar{
+#btn-group{
+    max-width: 50%;
+    display: flex;
     border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid #77c7e0;
+    margin-top: 20px;
+}
+
+.btn-toggle{
+    border-radius: 0px;
     padding: 10px;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
+    border-left: 1px;
+    border-right: 1px;
+    border-top: 0;
+    border-bottom: 0;
+    border-color: #77c7e0;
+    border-style: solid;
+}
+
+.btn-toggle.active{
+    background-color: #d4f1fa;
+}
+.btn-toggle.inactive{
     background-color: #f4f8f9;
-    border: 1px solid #77c7e0;
-    margin-top: 10px;
 }
 
 #texto{
