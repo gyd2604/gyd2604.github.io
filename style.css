@@ -116,6 +116,7 @@ body{
 }
 
 .btn-toggle{
+    cursor: pointer;
     border-radius: 0px;
     padding: 10px;
     font-family: 'Poppins', sans-serif;

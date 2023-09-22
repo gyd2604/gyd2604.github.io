@@ -38,9 +38,9 @@
     </div>
   </div>
   <div id="btn-group">
-    <button id="cambiar-meses" class="btn-toggle active" onclick="toggle(0)">Meses</button>
+    <button id="cambiar-meses" class="btn-toggle inactive" onclick="toggle(0)">Meses</button>
     <button id="cambiar-semanas" class="btn-toggle inactive" onclick="toggle(1)">Semanas</button>
-    <button id="cambiar-dias" class="btn-toggle inactive" onclick="toggle(2)">Días</button>
+    <button id="cambiar-dias" class="btn-toggle active" onclick="toggle(2)">Días</button>
   </div>
   <p id="texto"></p>
   <div class="foto-container">
@@ -53,7 +53,7 @@
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("Apr 18, 2024 14:00:00").getTime();
-var mode = 0; //0=mes, 1=semana, 2=dias
+var mode = 2; //0=mes, 1=semana, 2=dias
 var toggled = false;
 
 // Update the count down every 1 second
