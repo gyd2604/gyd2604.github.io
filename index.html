@@ -14,6 +14,13 @@
   <div id="progreso-container">
     <img id="david" class="foto-progreso" src="david.png">
     <img id="gio" class="foto-progreso" src="gio.png">
+    <div id="tick-container">
+      <div class="tick"><span>Sep. 9</span></div>
+      <div class="tick"><span>Nov. 4</span></div>
+      <div class="tick"><span>Dic. 30</span></div>
+      <div class="tick"><span>Feb. 22</span></div>
+      <div class="tick"><span>Abr. 18</span></div>
+    </div>
     <progress id="progreso" max="100" value="0"></progress>
   </div>
   <p id="falta">Solo faltan</p>
@@ -52,7 +59,7 @@
 
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date("Apr 18, 2024 14:00:00").getTime();
+var countDownDate = new Date(Date.UTC(2024,3,18,13,50)).getTime();
 var mode = 2; //0=mes, 1=semana, 2=dias
 var toggled = false;
 
@@ -126,7 +133,7 @@ function calcular(){
   document.getElementById("num-m").innerHTML = months;
   document.getElementById("let-m").innerHTML = (months!=1?" meses":" mes");
   document.getElementById("num-sem").innerHTML = weeks;
-  document.getElementById("let-sem").innerHTML = (weeks!=1?"semanas":"semana");
+  document.getElementById("let-sem").innerHTML = (weeks!=1?"sem.":"sem.");
   document.getElementById("num-d").innerHTML = days;
   document.getElementById("let-d").innerHTML = (days!=1?"días":"día");
   document.getElementById("num-h").innerHTML = hours;
