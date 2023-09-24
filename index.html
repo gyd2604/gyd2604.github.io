@@ -105,11 +105,11 @@ function calcular(){
   var months = 0;
   switch(mode){
     case 0: //meses
-      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
       weeks = Math.floor((distance % (1000 * 60 * 60 * 24 * 7 * 4)) / (1000 * 60 * 60 * 24 * 7));
-      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
+      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
 
-      document.getElementById("semanas").style.display='flex';
+      document.getElementById("semanas").style.display='none';
       document.getElementById("meses").style.display='flex';
       break;
     case 1:
@@ -121,7 +121,7 @@ function calcular(){
       document.getElementById("meses").style.display='none';
       break;
     case 2: //días
-      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
+      months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
       weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
       days = Math.floor(distance / (1000 * 60 * 60 * 24));
 

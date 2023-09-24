@@ -205,6 +205,10 @@ body{
     #david{
         right: -30%;
     }
+    .tick{
+        width: 1px;
+    }
+
 
     .tick span{
         font-size: 12px;
