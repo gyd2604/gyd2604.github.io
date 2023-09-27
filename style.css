@@ -83,10 +83,20 @@ body{
 }
 
 .tick{
+    background-color: #4592a9;
+}
+
+.tick.major{
     width: 2px;
     height: 100%;
-    background-color: #4592a9;
     border: 1px solid #d4f1fa;
+}
+
+.tick.minor{
+    margin-top: 2px;
+    width: 2px;
+    height: 80%;
+    border: none;
 }
 
 .tick span{
@@ -205,12 +215,20 @@ body{
     #david{
         right: -30%;
     }
-    .tick{
+
+    .tick.major{
         width: 1px;
     }
 
+    .tick.minor {
+        margin-top: 3px;
+        width: 1px;
+    }
 
     .tick span{
         font-size: 12px;
+    }
+    .tick.minor span{
+        display: none;
     }
 }
