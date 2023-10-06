@@ -22,7 +22,7 @@
     <img id="david" class="foto-progreso" src="david.png">
     <img id="gio" class="foto-progreso" src="gio.png">
     <div id="tick-container">
-      <div class="tick major"><span>Sep. 9</span></div>
+      <!-- <div class="tick major"><span>Sep. 9</span></div>
       <div class="tick minor"><span>Oct. 7</span></div>
       <div class="tick major"><span>Nov. 4</span></div>
       <div class="tick minor"><span>Dic. 2</span></div>
@@ -30,7 +30,7 @@
       <div class="tick minor"><span>Ene. 26</span></div>
       <div class="tick major"><span>Feb. 23</span></div>
       <div class="tick minor"><span>Mar. 21</span></div>
-      <div class="tick major"><span>Abr. 18</span></div>
+      <div class="tick major"><span>Abr. 18</span></div> -->
     </div>
     <progress id="progreso" max="100" value="0"></progress>
   </div>
@@ -55,10 +55,11 @@
       <span id="num-s" class="num"></span><span id="let-s" class="letra"></span>
     </div>
   </div>
+  <!-- <div id="texto-progreso">(Han pasado )</div> -->
   <div id="btn-group">
-    <button id="cambiar-meses" class="btn-toggle inactive" onclick="toggle(0)">Meses</button>
+    <button id="cambiar-dias" class="btn-toggle active" onclick="toggle(0)">Días</button>
     <button id="cambiar-semanas" class="btn-toggle inactive" onclick="toggle(1)">Semanas</button>
-    <button id="cambiar-dias" class="btn-toggle active" onclick="toggle(2)">Días</button>
+    <button id="cambiar-meses" class="btn-toggle inactive" onclick="toggle(2)">Meses</button>
   </div>
   <p id="texto"></p>
   <div class="foto-container">
@@ -71,13 +72,47 @@
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date(Date.UTC(2024,3,18,13,50)).getTime();
-var mode = 2; //0=mes, 1=semana, 2=dias
+var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
+var totalTime = countDownDate - startDate;
+var mode = 0; //0=días, 1=semana, 2=meses
 var toggled = false;
+const monthNames = ["Ene.", "Feb.", "Mar.", "Abr.", "May.", "Jun.",
+  "Jul.", "Ago.", "Sep.", "Oct.", "Nov.", "Dic."
+];
 
 // Update the count down every 1 second
 var x = setInterval(function() {
 calcular();
 }, 1000);
+
+//Tick display
+var ticks = 9;
+var tickContainer = document.getElementById("tick-container");
+for(var i=0; i<ticks; i++){
+  var childTick = document.createElement("div");
+  childTick.classList.add("tick");
+  if(i%2==0){
+    childTick.classList.add("major");
+    if(ticks>9){
+      var span = document.createElement("span");
+      var tickDate = new Date(startDate+(totalTime/(ticks-1))*i);
+      console.log(tickDate);
+      span.innerHTML=monthNames[tickDate.getMonth()]+" "+tickDate.getDate();
+      childTick.appendChild(span);
+    }
+  } else{
+    childTick.classList.add("minor");
+  }
+  if(ticks<=9){
+    var span = document.createElement("span");
+    var tickDate = new Date(startDate+(totalTime/(ticks-1))*i);
+    console.log(tickDate);
+    span.innerHTML=monthNames[tickDate.getMonth()]+" "+tickDate.getDate();
+    childTick.appendChild(span);
+  }
+  tickContainer.appendChild(childTick);
+
+}
 
 function toggle (opc) {
   toggled = true;
@@ -101,7 +136,6 @@ function calcular(){
 
   // Get today's date and time
   var now = new Date().getTime();
-  var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
 
   // Find the distance between now and the count down date
   var distance = countDownDate - now;
@@ -115,13 +149,15 @@ function calcular(){
   var weeks = 0;
   var months = 0;
   switch(mode){
-    case 0: //meses
-      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-      weeks = Math.floor((distance % (1000 * 60 * 60 * 24 * 7 * 4)) / (1000 * 60 * 60 * 24 * 7));
+    case 0: //días
       months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
+      weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+      days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
       document.getElementById("semanas").style.display='none';
-      document.getElementById("meses").style.display='flex';
+      document.getElementById("meses").style.display='none';
+
+      //document.getElementById("texto-progreso").innerHTML = "Han pasado "+months;
       break;
     case 1:
       months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
@@ -131,13 +167,13 @@ function calcular(){
       document.getElementById("semanas").style.display='flex';
       document.getElementById("meses").style.display='none';
       break;
-    case 2: //días
+    case 2: //meses
+      days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      weeks = Math.floor((distance % (1000 * 60 * 60 * 24 * 7 * 4)) / (1000 * 60 * 60 * 24 * 7));
       months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
-      weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
-      days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
       document.getElementById("semanas").style.display='none';
-      document.getElementById("meses").style.display='none';
+      document.getElementById("meses").style.display='flex';
       break;
   }
       // Display the result in the element with id="demo"
