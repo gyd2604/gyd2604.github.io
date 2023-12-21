@@ -65,6 +65,22 @@ body{
     z-index: 2;
 }
 
+#regalo{
+    right: 10%;
+    top: -230%;
+    z-index: 3;
+}
+
+#regalo img{
+    width: 100%;
+}
+
+#title-regalo{
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
 #gio{
     z-index: 2;
 }

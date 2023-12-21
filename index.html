@@ -20,6 +20,7 @@
 <div id="content">
   <div id="progreso-container">
     <img id="david" class="foto-progreso" src="david.png">
+    <a  id="regalo" class="foto-progreso"  href="regalo.html"><img src="reg.png"></a>
     <img id="gio" class="foto-progreso" src="gio.png">
     <div id="tick-container">
       <!-- <div class="tick major"><span>Sep. 9</span></div>
@@ -79,11 +80,29 @@ var toggled = false;
 const monthNames = ["Ene.", "Feb.", "Mar.", "Abr.", "May.", "Jun.",
   "Jul.", "Ago.", "Sep.", "Oct.", "Nov.", "Dic."
 ];
+var navidad = false;
 
 // Update the count down every 1 second
 var x = setInterval(function() {
 calcular();
 }, 1000);
+
+//Navidad
+var now = new Date().getTime();
+  const navstart = new Date('2023-12-20');
+  const navend = new Date('2023-12-31');
+
+  if (now > navstart && now < navend) {
+    navidad = true;
+    document.getElementById("gio").src="gio-nav.png";
+    document.getElementById("gio").style.width="50%";
+    document.getElementById("gio").style.top="-223%";
+    document.getElementById("david").src="david-nav.png";
+    document.getElementById("david").style.width="50%";
+    document.getElementById("david").style.top="-223%";
+  } else {
+    navidad = false;
+  }
 
 //Tick display
 var ticks = 9;
@@ -111,7 +130,6 @@ for(var i=0; i<ticks; i++){
     childTick.appendChild(span);
   }
   tickContainer.appendChild(childTick);
-
 }
 
 function toggle (opc) {
@@ -191,6 +209,9 @@ function calcular(){
   document.getElementById("let-s").innerHTML = (seconds!=1?"segs.":"seg.");
   document.getElementById("progreso").value = progress;
   document.getElementById("gio").style.left = (progress-20) + "%";
+  if(navidad){
+    document.getElementById("gio").style.left = (progress-40) + "%";
+  }
 
   if(months<1) {
     document.getElementById("meses").style.display='none';

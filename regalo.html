@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cuenta regresiva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+  <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+
+  <div id="content">
+    <h2 id="title-regalo">¿Estás abriendo este regalo sin permiso? <br> Te pillé</h2>
+  </div>
+
+  <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date(Date.UTC(2024, 3, 18, 13, 50)).getTime();
+    var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
+    var totalTime = countDownDate - startDate;
+    var mode = 0; //0=días, 1=semana, 2=meses
+    var toggled = false;
+    const monthNames = ["Ene.", "Feb.", "Mar.", "Abr.", "May.", "Jun.",
+      "Jul.", "Ago.", "Sep.", "Oct.", "Nov.", "Dic."
+    ];
+    var navidad = false;
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+      calcular();
+    }, 1000);
+
+    //Navidad
+    var now = new Date().getTime();
+    const navstart = new Date('2023-12-20');
+    const navend = new Date('2023-12-31');
+
+    if (now > navstart && now < navend) {
+      navidad = true;
+      document.getElementById("gio").src = "gio-nav.png";
+      document.getElementById("gio").style.width = "50%";
+      document.getElementById("gio").style.top = "-223%";
+      document.getElementById("david").src = "david-nav.png";
+      document.getElementById("david").style.width = "50%";
+      document.getElementById("david").style.top = "-223%";
+    } else {
+      navidad = false;
+    }
+
+    //Tick display
+    var ticks = 9;
+    var tickContainer = document.getElementById("tick-container");
+    for (var i = 0; i < ticks; i++) {
+      var childTick = document.createElement("div");
+      childTick.classList.add("tick");
+      if (i % 2 == 0) {
+        childTick.classList.add("major");
+        if (ticks > 9) {
+          var span = document.createElement("span");
+          var tickDate = new Date(startDate + (totalTime / (ticks - 1)) * i);
+          console.log(tickDate);
+          span.innerHTML = monthNames[tickDate.getMonth()] + " " + tickDate.getDate();
+          childTick.appendChild(span);
+        }
+      } else {
+        childTick.classList.add("minor");
+      }
+      if (ticks <= 9) {
+        var span = document.createElement("span");
+        var tickDate = new Date(startDate + (totalTime / (ticks - 1)) * i);
+        console.log(tickDate);
+        span.innerHTML = monthNames[tickDate.getMonth()] + " " + tickDate.getDate();
+        childTick.appendChild(span);
+      }
+      tickContainer.appendChild(childTick);
+    }
+
+    function toggle(opc) {
+      toggled = true;
+      mode = opc;
+      var group = document.getElementById("btn-group");
+      for (var i = 0; i < group.children.length; i++) {
+        var child = group.children[i];
+        if (i == opc) {
+          child.classList.add("active");
+          child.classList.remove("inactive");
+        } else {
+          child.classList.remove("active");
+          child.classList.add("inactive");
+        }
+      }
+      calcular();
+
+    }
+
+    function calcular() {
+
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+      var progress = (1 - (distance / (countDownDate - startDate))) * 100;
+
+      // Time calculations for days, hours, minutes and seconds
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var days = 0;
+      var weeks = 0;
+      var months = 0;
+      switch (mode) {
+        case 0: //días
+          months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
+          weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+          days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+          document.getElementById("semanas").style.display = 'none';
+          document.getElementById("meses").style.display = 'none';
+
+          //document.getElementById("texto-progreso").innerHTML = "Han pasado "+months;
+          break;
+        case 1:
+          months = Math.floor(distance / (1000 * 60 * 60 * 24 * 7 * 4));
+          weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+          days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+
+          document.getElementById("semanas").style.display = 'flex';
+          document.getElementById("meses").style.display = 'none';
+          break;
+        case 2: //meses
+          days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+          weeks = Math.floor((distance % (1000 * 60 * 60 * 24 * 7 * 4)) / (1000 * 60 * 60 * 24 * 7));
+          months = Math.floor(distance / (1000 * 60 * 60 * 24 * 30));
+
+          document.getElementById("semanas").style.display = 'none';
+          document.getElementById("meses").style.display = 'flex';
+          break;
+      }
+      // Display the result in the element with id="demo"
+      document.getElementById("num-m").innerHTML = months;
+      document.getElementById("let-m").innerHTML = (months != 1 ? " meses" : " mes");
+      document.getElementById("num-sem").innerHTML = weeks;
+      document.getElementById("let-sem").innerHTML = (weeks != 1 ? "sem." : "sem.");
+      document.getElementById("num-d").innerHTML = days;
+      document.getElementById("let-d").innerHTML = (days != 1 ? "días" : "día");
+      document.getElementById("num-h").innerHTML = hours;
+      document.getElementById("let-h").innerHTML = (hours != 1 ? "horas" : "hora");
+      document.getElementById("num-min").innerHTML = minutes;
+      document.getElementById("let-min").innerHTML = (minutes != 1 ? "mins." : "min.");
+      document.getElementById("num-s").innerHTML = seconds;
+      document.getElementById("let-s").innerHTML = (seconds != 1 ? "segs." : "seg.");
+      document.getElementById("progreso").value = progress;
+      document.getElementById("gio").style.left = (progress - 20) + "%";
+      if (navidad) {
+        document.getElementById("gio").style.left = (progress - 40) + "%";
+      }
+
+      if (months < 1) {
+        document.getElementById("meses").style.display = 'none';
+        document.getElementById("cambiar-meses").style.display = 'none';
+        if (!toggled) {
+          mode = 1;
+          var group = document.getElementById("btn-group");
+          for (var i = 0; i < group.children.length; i++) {
+            var child = group.children[i];
+            if (i == mode) {
+              child.classList.add("active");
+              child.classList.remove("inactive");
+            } else {
+              child.classList.remove("active");
+              child.classList.add("inactive");
+            }
+          }
+        }
+        if (weeks < 1) {
+          document.getElementById("semanas").style.display = 'none';
+          document.getElementById("btn-group").style.display = 'none';
+          if (days < 1) {
+            document.getElementById("dias").style.display = 'none';
+            if (hours < 1) {
+              document.getElementById("horas").style.display = 'none';
+              if (minutes < 1) {
+                document.getElementById("minutos").style.display = 'none';
+                if (seconds < 1) {
+                  document.getElementById("segundos").style.display = 'none';
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // If the count down is finished, write some text
+      if (distance <= 0) {
+        clearInterval(x);
+        document.getElementById("texto").innerHTML = "Estamos juntos ♥";
+        document.getElementById("falta").style.display = 'none';
+      } else {
+        document.getElementById("texto").innerHTML = "para volver a estar así";
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
