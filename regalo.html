@@ -22,7 +22,7 @@
   <div id="content">
     <h2 id="title-regalo">¿Estás abriendo este regalo sin permiso? <br> Te pillé</h2>
     <video id="vid" controls>
-      <source src="vid-santa.mp4" type="video/mp4">
+      <source src="video.mp4" type="video/mp4">
     Your browser does not support the video tag.
     </video>
     <div id="btn-group">
@@ -36,12 +36,12 @@
 
     //Navidad
     var now = new Date().getTime();
-    const navstart = new Date('2023-12-24 22:00:00');
+    const navstart = new Date('2023-12-22 22:00:00');
     const navend = new Date('2023-12-31');
 
     if (now > navstart && now < navend) {
       esNavidad = true;
-      document.getElementById("title-regalo").innerHTML = "Puedes ver el video y luego continuar";
+      document.getElementById("title-regalo").innerHTML = "Puedes ver el video (en privadooo) y luego continuar";
       document.getElementById("vid").style.display = "block";
       document.getElementById("btn-regalo").style.display = "block";
     } else {
