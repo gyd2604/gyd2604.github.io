@@ -72,7 +72,7 @@
 
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date(Date.UTC(2024,3,18,13,50)).getTime();
+var countDownDate = new Date(Date.UTC(2024,3,18,21,50)).getTime();
 var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
 var totalTime = countDownDate - startDate;
 var mode = 0; //0=días, 1=semana, 2=meses
@@ -100,8 +100,11 @@ var now = new Date().getTime();
     document.getElementById("david").src="david-nav.png";
     document.getElementById("david").style.width="50%";
     document.getElementById("david").style.top="-223%";
+    document.getElementById("david").style.top="-223%";
+    document.getElementById("regalo").style.display="block";
   } else {
     navidad = false;
+    document.getElementById("regalo").style.display="none";
   }
 
 //Tick display
