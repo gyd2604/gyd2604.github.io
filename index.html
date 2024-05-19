@@ -22,6 +22,7 @@
     <img id="david" class="foto-progreso" src="david.png">
     <a  id="regalo" class="foto-progreso"  href="regalo.html"><img src="reg.png"></a>
     <img id="gio" class="foto-progreso" src="gio.png">
+    <img id="posible" class="foto-progreso" src="posible.png">
     <div id="tick-container">
       <!-- <div class="tick major"><span>Sep. 9</span></div>
       <div class="tick minor"><span>Oct. 7</span></div>
@@ -65,15 +66,15 @@
   <p id="texto"></p>
   <div class="foto-container">
     <div class="foto-wrapper">
-      <img class="foto" src="fotico.jpg">
+      <img class="foto" src="fotico2.jpg">
     </div>
   </div>
 </div>
 
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date(Date.UTC(2024,3,18,21,50)).getTime();
-var startDate = new Date("Sep 9, 2023 14:00:00").getTime();
+var countDownDate = new Date(Date.UTC(2024,11,18,21,50)).getTime();
+var startDate = new Date("May 18, 2024 14:00:00").getTime();
 var totalTime = countDownDate - startDate;
 var mode = 0; //0=días, 1=semana, 2=meses
 var toggled = false;
@@ -108,7 +109,7 @@ var now = new Date().getTime();
   }
 
 //Tick display
-var ticks = 9;
+var ticks = 13;
 var tickContainer = document.getElementById("tick-container");
 for(var i=0; i<ticks; i++){
   var childTick = document.createElement("div");
@@ -157,10 +158,13 @@ function calcular(){
 
   // Get today's date and time
   var now = new Date().getTime();
+  var verano = new Date('2024-08-16');
 
   // Find the distance between now and the count down date
   var distance = countDownDate - now;
   var progress = (1-(distance/(countDownDate - startDate)))*100;
+  var distanciaVerano = countDownDate - verano;
+  var puntoVerano = (1-(distanciaVerano/(countDownDate - startDate)))*100;
 
   // Time calculations for days, hours, minutes and seconds
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -210,8 +214,12 @@ function calcular(){
   document.getElementById("let-min").innerHTML = (minutes!=1?"mins.":"min.");
   document.getElementById("num-s").innerHTML = seconds;
   document.getElementById("let-s").innerHTML = (seconds!=1?"segs.":"seg.");
+
   document.getElementById("progreso").value = progress;
   document.getElementById("gio").style.left = (progress-20) + "%";
+
+  let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  document.getElementById("posible").style.left = (puntoVerano-(vw>768?10:15)) + "%";
   if(navidad){
     document.getElementById("gio").style.left = (progress-40) + "%";
   }
