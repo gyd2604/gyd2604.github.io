@@ -22,7 +22,7 @@
     <img id="david" class="foto-progreso" src="david.png">
     <a  id="regalo" class="foto-progreso"  href="regalo.html"><img src="reg.png"></a>
     <img id="gio" class="foto-progreso" src="gio.png">
-    <img id="posible" class="foto-progreso" src="posible.png">
+    <!-- <img id="posible" class="foto-progreso" src="posible.png"> -->
     <div id="tick-container">
       <!-- <div class="tick major"><span>Sep. 9</span></div>
       <div class="tick minor"><span>Oct. 7</span></div>
@@ -73,7 +73,7 @@
 
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date(Date.UTC(2024,11,18,21,50)).getTime();
+var countDownDate = new Date(Date.UTC(2024,6,19,17,0)).getTime();
 var startDate = new Date("May 18, 2024 14:00:00").getTime();
 var totalTime = countDownDate - startDate;
 var mode = 0; //0=días, 1=semana, 2=meses
@@ -219,7 +219,7 @@ function calcular(){
   document.getElementById("gio").style.left = (progress-20) + "%";
 
   let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  document.getElementById("posible").style.left = (puntoVerano-(vw>768?10:15)) + "%";
+  // document.getElementById("posible").style.left = (puntoVerano-(vw>768?10:15)) + "%";
   if(navidad){
     document.getElementById("gio").style.left = (progress-40) + "%";
   }
