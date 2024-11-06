@@ -73,7 +73,7 @@
 
 <script>
 // Set the date we're counting down to
-var countDownDate = new Date("December 15, 2024 21:00:00").getTime();
+var countDownDate = new Date("December 24, 2024 18:00:00").getTime();
 var startDate = new Date("September 7, 2024 16:00:00").getTime();
 var totalTime = countDownDate - startDate;
 var mode = 0; //0=días, 1=semana, 2=meses
@@ -81,6 +81,7 @@ var toggled = false;
 const monthNames = ["Ene.", "Feb.", "Mar.", "Abr.", "May.", "Jun.",
   "Jul.", "Ago.", "Sep.", "Oct.", "Nov.", "Dic."
 ];
+let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 var navidad = false;
 
 // Update the count down every 1 second
@@ -90,26 +91,25 @@ calcular();
 
 //Navidad
 var now = new Date().getTime();
-  const navstart = new Date('2023-12-20');
-  const navend = new Date('2023-12-31');
+  const navstart = new Date('2024-10-01');
+  const navend = new Date('2024-12-31');
 
   if (now > navstart && now < navend) {
     navidad = true;
     document.getElementById("gio").src="gio-nav.png";
-    document.getElementById("gio").style.width="50%";
-    document.getElementById("gio").style.top="-223%";
+   /*  document.getElementById("gio").style.width="20%";
+    document.getElementById("gio").style.top="-223%"; */
     document.getElementById("david").src="david-nav.png";
-    document.getElementById("david").style.width="50%";
-    document.getElementById("david").style.top="-223%";
-    document.getElementById("david").style.top="-223%";
-    document.getElementById("regalo").style.display="block";
+    /* document.getElementById("david").style.width="20%";
+    document.getElementById("david").style.top="-223%"; */
+    document.getElementById("regalo").style.display="none";
   } else {
     navidad = false;
     document.getElementById("regalo").style.display="none";
   }
 
 //Tick display
-var ticks = 13;
+var ticks = vw>768?13:9;
 var tickContainer = document.getElementById("tick-container");
 for(var i=0; i<ticks; i++){
   var childTick = document.createElement("div");
@@ -216,13 +216,14 @@ function calcular(){
   document.getElementById("let-s").innerHTML = (seconds!=1?"segs.":"seg.");
 
   document.getElementById("progreso").value = progress;
-  document.getElementById("gio").style.left = (progress-20) + "%";
 
-  let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-  // document.getElementById("posible").style.left = (puntoVerano-(vw>768?10:15)) + "%";
   if(navidad){
-    document.getElementById("gio").style.left = (progress-40) + "%";
+    document.getElementById("gio").style.left = (progress-(vw>768?15:25)) + "%";
+  }else{
+    document.getElementById("gio").style.left = (progress-20) + "%";
   }
+
+  // document.getElementById("posible").style.left = (puntoVerano-(vw>768?10:15)) + "%";
 
   if(months<1) {
     document.getElementById("meses").style.display='none';
